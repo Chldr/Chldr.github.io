@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>下拉表单</title>
+        <style type="text/css">
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Source Sans Pro", Optima, "Helvetica Neue", Arial, "sans-serif";
+
+            }
+            .input-bar {
+                display: flex;
+                width: 260px;
+                padding: 2px;
+                min-height: 42px;
+                border: 1px solid #C0C0C0;
+                border-radius: 5px;
+                align-items: center;
+                flex-wrap: wrap;
+                margin: 10px 0px;
+            }
+
+            .input-bar:hover {
+                cursor: pointer;
+            }
+
+            ul {
+
+                width: 260px;
+                margin: 0px;
+                padding: 0px 2px;
+                border: 1px solid #C0C0C0;
+                border-radius: 3px;
+                box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);;
+
+            }
+
+            li {
+                vertical-align: middle;
+                list-style: none;
+                line-height: 30px;
+                margin: 4px 0px;
+                padding-left: 10px;
+                font-size:14px;
+                color: #404040;
+
+            }
+
+            li:hover {
+                cursor: pointer;
+                background-color: #F3EFEF;
+            }
+
+            .selected {
+                color:#0080FF;
+            }
+
+            .label {
+                line-height: 22px;
+                vertical-align: middle;
+                padding: 1px 8px;
+                font-size: 13px;
+                color: white;
+                border: 1px solid #0080FF;
+                border-radius: 25px;
+                background-color: #0080FF;
+                margin: 2px;
+                cursor: text;
+                font-weight: bold;
+            }
+
+            i {
+                font-style: normal;
+                cursor: pointer;
+                margin: 3px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div id='app'>
+            <div class="input-bar" v-on:click="show = !show" >
+                <span class="label" v-for="item in selected">
+                    {{ item }}<i v-on:click.stop="remove(item)">x</i>
+                </span>
+            </div>
+            <ul v-if="show">
+                <li v-for="option in options" v-on:click="select(option)" v-bind:class="{ selected: isSelected(option) }">{{option}}</li>
+            </ul>
+
+        </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                options: ['变更中','未生效','作废','正常','审核中'],
+                selected: [],
+                show: false,
+            },
+            methods: {
+                select: function(option) {
+                    const indexSelected= this.selected.indexOf(option)
+                    if (indexSelected == -1) {
+                        this.selected.push(option);
+                    } else {
+                        this.selected.splice(indexSelected, 1);
+                    }
+                },
+
+                isSelected: function(option) {
+                    return this.selected.indexOf(option) !== -1;
+
+                },
+
+                remove: function(item) {
+                    const index = this.selected.indexOf(item);
+                    this.selected.splice(index, 1);
+                }
+
+            }
+
+        })
+
+    </script>
+
+
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
